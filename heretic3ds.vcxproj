@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug-Win32|Win32">
+      <Configuration>Debug-Win32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug-Win32|x64">
+      <Configuration>Debug-Win32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C76EAF37-7876-4144-A0C0-140853E86E4C}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug-Win32|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug-Win32|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeBuildCommandLine>make -r 2&gt;&amp;1 | sed -e %27s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/</NMakeBuildCommandLine>
+    <NMakeOutput>heretic3ds.3dsx</NMakeOutput>
+    <NMakeCleanCommandLine>make clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>make clean &amp;&amp; make -r 2&gt;&amp;1 | sed -e %27s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>ARM11;_3DS;_HAVE_STDC</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>C:\devkitPro\libctru\include;C:\devkitPro\devkitARM\arm-none-eabi\include;C:\devkitPro\devkitARM\lib\gcc\arm-none-eabi\4.8.2\include;c:\devl\heretic3ds\include;c:\devl\heretic3ds\source;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryWPath />
+    <SourcePath />
+    <ExcludePath />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeBuildCommandLine>make -r 2&gt;&amp;1 | sed -e %27s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/</NMakeBuildCommandLine>
+    <NMakeOutput>heretic3ds.3dsx</NMakeOutput>
+    <NMakeCleanCommandLine>make clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>make clean &amp;&amp; make -r 2&gt;&amp;1 | sed -e %27s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>ARM11;_3DS;_HAVE_STDC;WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>C:\devkitPro\ctrulib\libctru\include;C:\devkitPro\devkitARM\arm-none-eabi\include;C:\devkitPro\devkitARM\lib\gcc\arm-none-eabi\4.8.2\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath />
+    <ReferencePath />
+    <LibraryPath />
+    <LibraryWPath />
+    <SourcePath />
+    <ExcludePath />
+    <NMakePreprocessorDefinitions>ARM11;_HAVE_STDC;_3DS</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>C:\devkitPro\libctru\include;C:\devkitPro\devkitARM\arm-none-eabi\include;c:\devl\heretic3ds\include</NMakeIncludeSearchPath>
+    <NMakeBuildCommandLine>make -r 2&gt;&amp;1 | sed -e %27s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>make clean &amp;&amp; make -r 2&gt;&amp;1 | sed -e %27s/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>make clean</NMakeCleanCommandLine>
+    <NMakeOutput>heretic3ds.3dsx</NMakeOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win32|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\ir_occlude.c" />
+    <ClCompile Include="source\ir_render.c" />
+    <ClCompile Include="source\3ds_sound.c" />
+    <ClCompile Include="source\ir_textures.c" />
+    <ClCompile Include="source\AM_MAP.c" />
+    <ClCompile Include="source\CT_CHAT.c" />
+    <ClCompile Include="source\dbopl.c" />
+    <ClCompile Include="source\ds_render.c" />
+    <ClCompile Include="source\ds_textures.c" />
+    <ClCompile Include="source\D_MAIN.c" />
+    <ClCompile Include="source\D_NET.c" />
+    <ClCompile Include="source\F_FINALE.c" />
+    <ClCompile Include="source\geometry.c" />
+    <ClCompile Include="source\gl_main.c" />
+    <ClCompile Include="source\G_GAME.c" />
+    <ClCompile Include="source\hw_mix.c" />
+    <ClCompile Include="source\INFO.c" />
+    <ClCompile Include="source\IN_LUDE.c" />
+    <ClCompile Include="source\ir_tex_atlas.cpp" />
+    <ClCompile Include="source\ir_video.c" />
+    <ClCompile Include="source\I_IBM.c" />
+    <ClCompile Include="source\I_SOUND.c.unused" />
+    <ClCompile Include="source\keyboard.c" />
+    <ClCompile Include="source\MaxRectsBinPack.cpp" />
+    <ClCompile Include="source\Mixer_dsp.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug-Win32|Win32'">
+      </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="source\MN_MENU.c" />
+    <ClCompile Include="source\musplay.c" />
+    <ClCompile Include="source\M_MISC.c" />
+    <ClCompile Include="source\opl.c" />
+    <ClCompile Include="source\opl_queue.c" />
+    <ClCompile Include="source\polylib.c" />
+    <ClCompile Include="source\P_CEILNG.c" />
+    <ClCompile Include="source\P_DOORS.c" />
+    <ClCompile Include="source\P_ENEMY.c" />
+    <ClCompile Include="source\P_FLOOR.c" />
+    <ClCompile Include="source\P_INTER.c" />
+    <ClCompile Include="source\P_LIGHTS.c" />
+    <ClCompile Include="source\P_MAP.c" />
+    <ClCompile Include="source\P_MAPUTL.c" />
+    <ClCompile Include="source\P_MOBJ.c" />
+    <ClCompile Include="source\P_PLATS.c" />
+    <ClCompile Include="source\P_PSPR.c" />
+    <ClCompile Include="source\P_SETUP.c" />
+    <ClCompile Include="source\P_SIGHT.c" />
+    <ClCompile Include="source\P_SPEC.c" />
+    <ClCompile Include="source\P_SWITCH.c" />
+    <ClCompile Include="source\P_TELEPT.c" />
+    <ClCompile Include="source\P_TICK.c" />
+    <ClCompile Include="source\P_USER.c" />
+    <ClCompile Include="source\Rect.cpp" />
+    <ClCompile Include="source\R_DATA.c" />
+    <ClCompile Include="source\R_MAIN.c" />
+    <ClCompile Include="source\R_THINGS.c" />
+    <ClCompile Include="source\SB_BAR.c" />
+    <ClCompile Include="source\SOUNDS.c" />
+    <ClCompile Include="source\soundst.c.unused" />
+    <ClCompile Include="source\TABLES.c" />
+    <ClCompile Include="source\V_VIDEO.c" />
+    <ClCompile Include="source\W_WAD.c" />
+    <ClCompile Include="source\Z_ZONE.c" />
+    <ClCompile Include="win32\glview.cpp" />
+    <ClCompile Include="win32\GLWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="source\hexenarm.s" />
+    <None Include="source\main.c" />
+    <None Include="source\memcpy32.s" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\AM_DATA.H" />
+    <ClInclude Include="include\AM_MAP.H" />
+    <ClInclude Include="include\DOOMDATA.H" />
+    <ClInclude Include="include\DOOMDEF.H" />
+    <ClInclude Include="include\DSTRINGS.H" />
+    <ClInclude Include="include\ds_textures.h" />
+    <ClInclude Include="include\geometry.h" />
+    <ClInclude Include="include\INFO.H" />
+    <ClInclude Include="include\I_SOUND.H" />
+    <ClInclude Include="include\map.h" />
+    <ClInclude Include="include\p_enemy.h" />
+    <ClInclude Include="include\p_inter.h" />
+    <ClInclude Include="include\p_local.h" />
+    <ClInclude Include="include\p_map.h" />
+    <ClInclude Include="include\p_maputl.h" />
+    <ClInclude Include="include\p_mobj.h" />
+    <ClInclude Include="include\p_pspr.h" />
+    <ClInclude Include="include\p_setup.h" />
+    <ClInclude Include="include\P_SPEC.H" />
+    <ClInclude Include="include\p_tick.h" />
+    <ClInclude Include="include\p_user.h" />
+    <ClInclude Include="include\R_LOCAL.H" />
+    <ClInclude Include="include\sb_bar.h" />
+    <ClInclude Include="include\SOUNDS.H" />
+    <ClInclude Include="include\SOUNDST.H" />
+    <ClInclude Include="include\MaxRectsBinPack.h" />
+    <ClInclude Include="win32\GLWindow.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

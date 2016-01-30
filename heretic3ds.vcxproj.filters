@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\AM_MAP.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CT_CHAT.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\D_MAIN.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\D_NET.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ds_textures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\F_FINALE.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\G_GAME.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\geometry.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\I_IBM.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\IN_LUDE.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\INFO.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\M_MISC.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MN_MENU.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_CEILNG.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_DOORS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_ENEMY.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_FLOOR.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_INTER.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_LIGHTS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_MAP.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_MAPUTL.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_MOBJ.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_PLATS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_PSPR.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_SETUP.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_SIGHT.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_SPEC.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_SWITCH.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_TELEPT.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_TICK.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\P_USER.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\polylib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\R_DATA.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\R_MAIN.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\R_THINGS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SB_BAR.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SOUNDS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TABLES.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\V_VIDEO.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\W_WAD.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Z_ZONE.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\soundst.c.unused">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\I_SOUND.c.unused">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\hw_mix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\3ds_sound.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dbopl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ds_render.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\keyboard.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mixer_dsp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\musplay.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\opl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\opl_queue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win32\glview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win32\GLWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gl_main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ir_render.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ir_textures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ir_occlude.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ir_video.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MaxRectsBinPack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Rect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ir_tex_atlas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="source\main.c" />
+    <None Include="source\hexenarm.s" />
+    <None Include="source\memcpy32.s" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\AM_DATA.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AM_MAP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DOOMDATA.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DOOMDEF.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ds_textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DSTRINGS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\geometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\I_SOUND.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\INFO.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_inter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_maputl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_mobj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_pspr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_setup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\P_SPEC.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_tick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\p_user.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\R_LOCAL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb_bar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SOUNDS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SOUNDST.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win32\GLWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MaxRectsBinPack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
