@@ -805,7 +805,7 @@ boolean G_Responder(event_t *ev)
 	extern boolean MenuActive;
 
 	plr = &players[consoleplayer];
-	plr->cheats |= CF_GODMODE;
+	//plr->cheats |= CF_GODMODE;
 	//plr->cheats |= CF_NOMOMENTUM;
 	//plr->cheats |= CF_NOCLIP;
 	if(ev->type == ev_keyup && ev->data1 == key_useartifact)
