@@ -9,9 +9,8 @@ int idmusnum;
 
 int default_numChannels;
 
-int snd_MaxVolume = 120;
-int snd_SfxVolume = 15;
-int snd_MusicVolume = 15;
+int snd_MaxVolume = 10;
+int snd_MusicVolume = 10;
 
 int nosfxparm = 0;
 int nomusicparm = 0;
@@ -30,11 +29,6 @@ void S_PauseSound(void) {
 
 void S_ResumeSound(void) {
 }
-
-void S_SetSfxVolume(int volume) {
-	snd_MaxVolume = volume*8;
-}
-
 
 //============================================================
 void S_StartMusic(int music_id) {
@@ -170,6 +164,13 @@ void S_Init() {
 		return;
 	}
 #endif
+	//set these to sane levels if needed
+	if (snd_MaxVolume < 0 || snd_MaxVolume > 15) {
+		snd_MaxVolume = 10;
+	}
+	if (snd_MusicVolume < 0 || snd_MusicVolume > 15) {
+		snd_MusicVolume = 10;
+	}
 	MIX_init();
 	mus_init();
 }

@@ -408,8 +408,8 @@ default_t defaults[] =
 	{ "mouse_sensitivity", &mouseSensitivity, 5 },
 
 #ifndef __NeXT__
-	{ "sfx_volume", &snd_MaxVolume, 127},
-	{ "music_volume", &snd_MusicVolume, 127},
+	{ "sfx_volume", &snd_MaxVolume, 10},
+	{ "music_volume", &snd_MusicVolume, 10},
 #endif
 
 #ifdef __WATCOMC__

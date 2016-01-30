@@ -892,8 +892,8 @@ static void DrawOptionsMenu(void)
 static void DrawOptions2Menu(void)
 {
 	DrawSlider(&Options2Menu, 1, 9, screenblocks-3);
-	DrawSlider(&Options2Menu, 3, 16, snd_MaxVolume/8);
-	DrawSlider(&Options2Menu, 5, 16, snd_MusicVolume/8);
+	DrawSlider(&Options2Menu, 3, 16, snd_MaxVolume);
+	DrawSlider(&Options2Menu, 5, 16, snd_MusicVolume);
 }
 
 //---------------------------------------------------------------------------
@@ -1126,20 +1126,16 @@ static boolean SCMouseSensi(int option)
 
 static boolean SCSfxVolume(int option)
 {
-	if(option == RIGHT_DIR)
+	if (option == RIGHT_DIR)
 	{
-		snd_MaxVolume += 8;
-		if(snd_MaxVolume > 127)
+		if (snd_MaxVolume < 15)
 		{
-			snd_MaxVolume = 127;
+			snd_MaxVolume++;
 		}
 	}
-	else
+	else if (snd_MaxVolume)
 	{
-		snd_MaxVolume -= 8;
-		 if(snd_MaxVolume < 0) {
-			 snd_MaxVolume = 0;
-		 }
+		snd_MaxVolume--;
 	}
 	S_SetMaxVolume(false); // don't recalc the sound curve, yet
 	soundchanged = true; // we'll set it when we leave the menu
@@ -1154,21 +1150,16 @@ static boolean SCSfxVolume(int option)
 
 static boolean SCMusicVolume(int option)
 {
-	if(option == RIGHT_DIR)
+	if (option == RIGHT_DIR)
 	{
-		snd_MusicVolume += 8;
-		if(snd_MusicVolume > 127)
+		if (snd_MusicVolume < 15)
 		{
-			snd_MusicVolume = 127;
+			snd_MusicVolume++;
 		}
 	}
-	else// if(snd_MusicVolume)
+	else if (snd_MusicVolume)
 	{
-		snd_MusicVolume -= 8;
-		if(snd_MusicVolume < 0) {
-			snd_MusicVolume = 0;
-		}
-
+		snd_MusicVolume--;
 	}
 	S_SetMusicVolume();
 	return true;

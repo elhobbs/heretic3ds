@@ -334,7 +334,8 @@ static void writeModulation(uint slot, OPL2instrument *instr, int state)
 
 static uint calcVolume(uint channelVolume, uint MUSvolume, uint noteVolume)
 {
-	noteVolume = ((ulong)channelVolume * MUSvolume * noteVolume) / (256 * 127);
+	noteVolume = ((((ulong)channelVolume * MUSvolume)/127) * noteVolume) / 127;
+	//printf("nv: %d %d\n", MUSvolume, noteVolume);
 	if (noteVolume > 127)
 		return 127;
 	else
@@ -875,11 +876,12 @@ void mus_stop_music() {
 
 void mus_update_volume() {
 	musicBlock *mus = &_mus;
-	int volume = snd_MusicVolume * 34;
+	int volume = snd_MusicVolume;
 	if (!mus_initialized) {
 		return;
 	}
-	mus->volume = volume;
+	volume = mus->volume = snd_MusicVolume * 17;
+	//printf("volume: %d\n", volume);
 	OPLchangeVolume(mus, volume);
 }
 
@@ -1059,7 +1061,7 @@ void mus_init() {
 	musicBlock *mus = &_mus;
 	mus->state = ST_EMPTY;
 	mus->number = 0;
-	mus->volume = 256;
+	mus->volume = 255;
 	mus->channelMask = -1U;
 	mus->percussMask = 1 << PERCUSSION;
 

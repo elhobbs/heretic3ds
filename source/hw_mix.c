@@ -71,6 +71,12 @@ static u64 sound_pos;
 static u64 sound_start;
 #define TICKS_PER_SEC_LL 268111856LL
 
+inline void ndspSleep() {
+#ifdef _3DS
+	svcSleepThread(20000);
+#endif
+}
+
 #ifdef _3DS
 u64 soundpos() {
 	u64 delta = (svcGetSystemTick() - sound_start);
@@ -126,7 +132,7 @@ void I_StopSound(channel_t *c) {
 			ndspChnWaveBufClear(c-channel);
 		}
 		i++;
-		svcSleepThread(500000);
+		ndspSleep();
 		//printf("-----: %2d %8s %d %08x %d\n", c-channel, c->sfxinfo->name, (int)(c->wavebuf.status), c->wavebuf.data_vaddr, i);
 	}
 
@@ -170,12 +176,9 @@ void MIX_Update_(void)
 			I_StopSound(ch);
 		}
 	}
-#ifdef _3DS
-	svcSleepThread(500000);
-#endif
+	ndspSleep();
 }
 
-extern int snd_SfxVolume;
 //
 // Changes volume and stereo-separation variables
 //  from the norm of a sound effect to be played.
@@ -200,7 +203,7 @@ int S_AdjustSoundParams(mobj_t *listener, mobj_t *source,
 	// From _GG1_ p.428. Appox. eucledian distance fast.
 	approx_dist = adx + ady - ((adx < ady ? adx : ady) >> 1);
 
-	if (gamemap != 8 && approx_dist > S_CLIPPING_DIST)
+	if (approx_dist > S_CLIPPING_DIST)
 	{
 		return 0;
 	}
@@ -229,23 +232,23 @@ int S_AdjustSoundParams(mobj_t *listener, mobj_t *source,
 	// volume calculation
 	if (approx_dist < S_CLOSE_DIST)
 	{
-		*vol = snd_SfxVolume;
+		*vol = snd_MaxVolume;
 	}
-	else if (gamemap == 8)
+	/*else if (gamemap == 8)
 	{
 		if (approx_dist > S_CLIPPING_DIST)
 		{
 			approx_dist = S_CLIPPING_DIST;
 		}
 
-		*vol = 15 + ((snd_SfxVolume - 15)
+		*vol = 15 + ((snd_MaxVolume - 15)
 			*((S_CLIPPING_DIST - approx_dist) >> FRACBITS))
 			/ S_ATTENUATOR;
-	}
+	}*/
 	else
 	{
 		// distance effect
-		*vol = (snd_SfxVolume
+		*vol = (snd_MaxVolume
 			* ((S_CLIPPING_DIST - approx_dist) >> FRACBITS))
 			/ S_ATTENUATOR;
 	}
@@ -261,9 +264,10 @@ void MIX_UpdateSounds(mobj_t *listener)
 	int priority;
 	int absx;
 	int absy;
+	float master_volume = (float)snd_MaxVolume / 15.0f;
 
 	//listener = players[consoleplayer].mo;
-	if (snd_SfxVolume == 0)
+	if (snd_MaxVolume == 0)
 	{
 		return;
 	}
@@ -281,7 +285,7 @@ void MIX_UpdateSounds(mobj_t *listener)
 				if (ndspChnIsPlaying(i) && channel[i].wavebuf.data_vaddr == 0) {
 					//printf("error: %d %08x\n", i, channel[i].wavebuf.data_vaddr);
 					ndspChnWaveBufClear(i);
-					svcSleepThread(500000);
+					ndspSleep();
 				}
 #endif
 				continue;
@@ -290,17 +294,19 @@ void MIX_UpdateSounds(mobj_t *listener)
 				S_StopSound(channel[i].origin);
 				continue;
 			}
-			priority = channel[i].sfxinfo->priority;
-			priority *= (10 - (dist >> 8));
-			//channel[i].priority = priority;
-			channel[i].left = ((255 - sep) * vol) / 15;
-			channel[i].right = ((sep)* vol) / 15;
-			channel[i].mix[0] = (float)channel[i].left / 128.0f;
-			channel[i].mix[1] = (float)channel[i].right / 128.0f;
+			else {
+				priority = channel[i].sfxinfo->priority;
+				priority *= (10 - (dist >> 8));
+				//channel[i].priority = priority;
+				channel[i].left = ((255 - sep) * vol) / 15;
+				channel[i].right = ((sep)* vol) / 15;
+				channel[i].mix[0] = master_volume * (float)channel[i].left / 128.0f;
+				channel[i].mix[1] = master_volume * (float)channel[i].right / 128.0f;
 #ifdef _3DS
-			ndspChnSetMix(i, channel[i].mix);
+				ndspChnSetMix(i, channel[i].mix);
 #endif
-			//printf("AGAIN %d %d - %d %d\n", sep, vol, channel[i].left, channel[i].right);
+				//printf("AGAIN %d %d - %d %d\n", sep, vol, channel[i].left, channel[i].right);
+			}
 		}
 	}
 	MIX_Update_();
@@ -414,6 +420,7 @@ int I_StartSound(sfxinfo_t *sfx, int cnum, int vol, int sep, int pitch, int prio
 	int sfx_len;
 	channel_t *ch;
 	size_t len;
+	float master_volume = (float)snd_MaxVolume / 15.0f;
 
 	if ((cnum < 0) || (cnum >= MAX_CHANNELS)) {
 #ifdef RANGECHECK
@@ -440,17 +447,17 @@ int I_StartSound(sfxinfo_t *sfx, int cnum, int vol, int sep, int pitch, int prio
 	data = W_CacheLumpNum(lump, PU_CACHE);
 	sfx_len = (data[7] << 24) | (data[6] << 16) | (data[5] << 8) | data[4];
 	if (data[0] != 0x03 || data[1] != 0x00 || sfx_len > len || sfx_len <= 48) {
-		return;
+		return -1;
 	}
 	//sfx_len -= 32;
 	data += 8;
 	//sfx->data = data;
 	ch = &channel[cnum];
 	ch->pitch = pitch;
-	ch->left = ((256 - sep) * vol) / 15;
-	ch->right = ((sep)* vol) / 15;
+	ch->left = ((256 - sep) * vol) / 128;
+	ch->right = ((sep)* vol) / 128;
 	ch->pos = 0;
-	//printf("start: %2d %8s %d %d\n",cnum, sfx->name,ch->left, ch->right);
+	//printf("start: %2d %8s %d %d %3.4f %d\n",cnum, sfx->name,ch->left, ch->right, master_volume, vol);
 
 	ldata = (byte *)linearAlloc(sfx_len);
 	
@@ -474,11 +481,11 @@ int I_StartSound(sfxinfo_t *sfx, int cnum, int vol, int sep, int pitch, int prio
 	ch->wavebuf.nsamples = len;
 	ch->wavebuf.looping = false;
 	ch->wavebuf.status = NDSP_WBUF_FREE;
-	ch->mix[0] = (float)ch->left / 128.0f;
-	ch->mix[1] = (float)ch->right / 128.0f;
+	ch->mix[0] = master_volume * (float)ch->left / 128.0f;
+	ch->mix[1] = master_volume * (float)ch->right / 128.0f;
 	ndspChnSetMix(cnum, ch->mix);
 	ndspChnWaveBufAdd(cnum, &ch->wavebuf);
-	svcSleepThread(500000);
+	ndspSleep();
 #endif
 	return channel;
 }
@@ -486,7 +493,7 @@ int I_StartSound(sfxinfo_t *sfx, int cnum, int vol, int sep, int pitch, int prio
 
 void S_StartSoundAtVolume(mobj_t *origin, int sfx_id, int volume)
 {
-	int sep, pitch, priority, cnum, is_pickup;
+	int sep, pitch, priority, cnum, is_pickup, dist;
 	sfxinfo_t *sfx;
 
 	//jff 1/22/98 return if sound is not enabled
@@ -502,7 +509,11 @@ void S_StartSoundAtVolume(mobj_t *origin, int sfx_id, int volume)
 
 	sfx = &S_sfx[sfx_id];
 	//printf(" sound %8s  %d\n", sfx->name, volume);
-
+	if (volume == 0)
+	{
+		return;
+	}
+	/*
 	// Initialize sound parameters
 	if (sfx->link)
 	{
@@ -513,24 +524,24 @@ void S_StartSoundAtVolume(mobj_t *origin, int sfx_id, int volume)
 		if (volume < 1)
 			return;
 
-		if (volume > snd_SfxVolume)
-			volume = snd_SfxVolume;
+		if (volume > snd_MaxVolume)
+			volume = snd_MaxVolume;
 	}
 	else
 	{
 		//pitch = NORM_PITCH;
 		priority = NORM_PRIORITY;
-	}
+	}*/
 
 	// Check to see if it is audible, modify the params
 	// killough 3/7/98, 4/25/98: code rearranged slightly
-
+	sep = NORM_SEP;
 	if (!origin || origin == players[displayplayer].mo) {
 		sep = NORM_SEP;
 		//volume *= 8;
 	}
 	else
-		if (!S_AdjustSoundParams(players[displayplayer].mo, origin, &volume, &sep, &pitch))
+		if (!S_AdjustSoundParams(players[displayplayer].mo, origin, &volume, &sep, &dist))
 			return;
 		else
 			if (origin->x == players[displayplayer].mo->x &&
@@ -577,7 +588,9 @@ void S_StartSoundAtVolume(mobj_t *origin, int sfx_id, int volume)
 }
 
 void S_StartSound(mobj_t *origin, int sound_id) {
-	S_StartSoundAtVolume(origin, sound_id, snd_SfxVolume);
+	if (snd_MaxVolume > 0) {
+		S_StartSoundAtVolume(origin, sound_id, (snd_MaxVolume + 1) * 8);
+	}
 }
 
 void S_Stop(void)
