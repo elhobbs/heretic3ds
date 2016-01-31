@@ -1318,7 +1318,7 @@ void IR_RenderWalls(void) {
 		verts[1].xyz[2] = wall->ybottom;
 		verts[1].xyz[1] = MAP_COORD(wall->side->sideSeg.v1->y);
 		memcpy(verts[1].c, verts[0].c, 16);
-		memcpy(verts[1].n, verts[0].n, 16);
+		memcpy(verts[1].n, verts[0].n, 12);
 
 		verts[2].st[0] = wall->ur;
 		verts[2].st[1] = wall->vb;
@@ -1331,7 +1331,7 @@ void IR_RenderWalls(void) {
 		verts[2].c[1] = light;
 		verts[2].c[2] = light;
 		verts[2].c[3] = 1.0f;
-		memcpy(verts[2].n, verts[0].n, 16);
+		memcpy(verts[2].n, verts[0].n, 12);
 
 
 		verts[3].st[0] = wall->ur;
@@ -1340,7 +1340,7 @@ void IR_RenderWalls(void) {
 		verts[3].xyz[2] = wall->ytop;
 		verts[3].xyz[1] = MAP_COORD(wall->side->sideSeg.v2->y);
 		memcpy(verts[3].c, verts[2].c, 16);
-		memcpy(verts[3].n, verts[0].n, 16);
+		memcpy(verts[3].n, verts[0].n, 12);
 
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 
