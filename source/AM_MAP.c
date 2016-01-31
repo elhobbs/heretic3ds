@@ -1329,6 +1329,27 @@ void AM_drawCrosshair(int color)
   fb[(f_w*(f_h+1))/2] = color; // single point for now
 }
 
+#ifdef _3DS
+extern byte *host_basepal;
+#define RGB8_to_565(r,g,b)  (((b)>>3)&0x1f)|((((g)>>2)&0x3f)<<5)|((((r)>>3)&0x1f)<<11)
+
+void copy_screen() {
+	u16* bufAdr = gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, NULL, NULL);
+	byte *src = fb;
+	int w, h;
+
+	for (w = 0; w<SCREENWIDTH; w++)
+	{
+		for (h = 0; h<finit_height; h++)
+		{
+			u32 v = (w * 240) + (239 - h);
+			u32 v1 = (h * 320 + w);
+			bufAdr[v] = RGB8_to_565(host_basepal[src[v1] * 3 + 0],host_basepal[src[v1] * 3 + 1],host_basepal[src[v1] * 3 + 2]);
+		}
+	}
+}
+#endif
+
 void AM_Drawer(void)
 {
 	int highestEpisode;
@@ -1352,6 +1373,9 @@ void AM_Drawer(void)
 	{
 		MN_DrTextA(LevelNames[(gameepisode-1)*9+gamemap-1], 20, 145);
 	}
+#ifdef _3DS
+	copy_screen();
+#endif
 //  I_Update();
 //  V_MarkRect(f_x, f_y, f_w, f_h);
 }

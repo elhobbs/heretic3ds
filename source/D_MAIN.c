@@ -190,12 +190,12 @@ void D_Display(void)
 		{
 			AM_Drawer ();
 		}
-		else
-		{
+		//else
+		//{
 			ir_pop_2d();
 			IR_RenderPlayerView (&players[displayplayer]);
 			ir_push_2d();
-		}
+		//}
 		CT_Drawer();
 		UpdateState |= I_FULLVIEW;
 		SB_Drawer();

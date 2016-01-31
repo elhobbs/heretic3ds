@@ -502,6 +502,9 @@ void keyboard_draw_region(sregion_t *region, int index, u16 c) {
 	}
 }
 
+extern boolean	automapactive;
+static boolean	automapactive_last = false;
+
 void keyboard_draw()
 {
 #ifdef _3DS
@@ -518,20 +521,34 @@ void keyboard_draw()
 	keyboard_screen = (u16*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, &width, &height);
 
 	//see if the keyboard layout has changed
-	if (keyboard_visible != keyboard_visible_last) {
+	if (keyboard_visible != keyboard_visible_last || automapactive || automapactive_last) {
 		keyboard_vofs = 152;
 		keyboard_hofs = 32;
+		h = keyboard_visible == 1 ? 19 : 24;
+
 		if (keyboard_visible == 2) {
 			keyboard_vofs = 216;
 		}
 		//clear the console and set window size
-		consoleClear();
-		memset(keyboard_screen, 0, 320*240*2);
-		h = keyboard_visible == 1 ? 19 : 24;
-		consoleSetWindow(0, 0, 0, 40, h);
+		if (!automapactive) {
+			consoleClear();
+			memset(keyboard_screen, 0, 320 * 240 * 2);
+			consoleSetWindow(0, 0, 0, 40, h);
+		}
+		else if (automapactive && !automapactive_last) {
+			consoleClear();
+			memset(keyboard_screen, 0, 320 * 240 * 2);
+			consoleSetWindow(0, 0, h-1, 40, 1);
+		}
+		else if (!automapactive && automapactive_last) {
+			consoleClear();
+			memset(keyboard_screen, 0, 320 * 240 * 2);
+			consoleSetWindow(0, 0, 0, 40, h);
+		}
 
 		//printf("full refresh: %d %d\n", keyboard_visible, keyboard_visible_last);
 		keyboard_visible_last = keyboard_visible;
+		automapactive_last = automapactive;
 	}
 	else {
 		//the keyboard layout has not changed so no need to draw everything
