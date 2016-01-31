@@ -68,6 +68,11 @@ static sregion_t key_array[] = {
 static u16 keyboard_fg = RGB8_to_565(192, 192, 192);
 static u16 keyboard_bg = RGB8_to_565(204, 102, 0);
 
+#define KEYBOARD_FULL_VOFS 160;
+#define KEYBOARD_MINI_VOFS 224;
+#define KEYBOARD_HOFS 32;
+
+
 static int keyboard_vofs;
 static int keyboard_hofs;
 
@@ -125,10 +130,10 @@ void keyboard_init()
 	key_button_array[0].dx = strlen(key_button_array[0].text) * 16;
 	key_button_array[1].dx = 16;
 	
-	keyboard_vofs = 152;
-	keyboard_hofs = 32;
+	keyboard_vofs = KEYBOARD_FULL_VOFS;
+	keyboard_hofs = KEYBOARD_HOFS;
 	if (keyboard_visible == 2) {
-		keyboard_vofs = 216;
+		keyboard_vofs = KEYBOARD_MINI_VOFS;
 	}
 }
 
@@ -520,27 +525,27 @@ void keyboard_draw()
 
 	keyboard_screen = (u16*)gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, &width, &height);
 
-	//see if the keyboard layout has changed
-	if (keyboard_visible != keyboard_visible_last || automapactive || automapactive_last) {
-		keyboard_vofs = 152;
-		keyboard_hofs = 32;
+	//see if the keyboard layout has changed or automap toggled
+	if (keyboard_visible != keyboard_visible_last || (automapactive ^ automapactive_last)) {
+		keyboard_vofs = KEYBOARD_FULL_VOFS;
+		keyboard_hofs = KEYBOARD_HOFS;
 		h = keyboard_visible == 1 ? 19 : 24;
 
 		if (keyboard_visible == 2) {
-			keyboard_vofs = 216;
+			keyboard_vofs = KEYBOARD_MINI_VOFS;
 		}
 		//clear the console and set window size
-		if (!automapactive) {
-			consoleClear();
-			memset(keyboard_screen, 0, 320 * 240 * 2);
-			consoleSetWindow(0, 0, 0, 40, h);
-		}
-		else if (automapactive && !automapactive_last) {
+		if (automapactive && !automapactive_last) {
 			consoleClear();
 			memset(keyboard_screen, 0, 320 * 240 * 2);
 			consoleSetWindow(0, 0, h-1, 40, 1);
 		}
 		else if (!automapactive && automapactive_last) {
+			consoleClear();
+			memset(keyboard_screen, 0, 320 * 240 * 2);
+			consoleSetWindow(0, 0, 0, 40, h);
+		}
+		else {
 			consoleClear();
 			memset(keyboard_screen, 0, 320 * 240 * 2);
 			consoleSetWindow(0, 0, 0, 40, h);

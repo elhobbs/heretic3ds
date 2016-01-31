@@ -784,7 +784,7 @@ void SB_Drawer(void)
 		DrawSoundInfo();
 	}
 	CPlayer = &players[consoleplayer];
-	if(viewheight == SCREEN_HEIGHT && !automapactive)
+	if(viewheight == SCREEN_HEIGHT)// && !automapactive)
 	{
 		ir_adust_position = 3;
 		DrawFullScreenStuff();

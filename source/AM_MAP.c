@@ -1371,7 +1371,7 @@ void AM_Drawer(void)
 	}
 	if((gameepisode < (ExtendedWAD ? 6 : 4)) && gamemap < 10)
 	{
-		MN_DrTextA(LevelNames[(gameepisode-1)*9+gamemap-1], 20, 145);
+		MN_DrTextA(LevelNames[(gameepisode-1)*9+gamemap-1], 4, 16);
 	}
 #ifdef _3DS
 	copy_screen();

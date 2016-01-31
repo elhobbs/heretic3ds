@@ -186,16 +186,15 @@ void D_Display(void)
 	case GS_LEVEL:
 		if (!gametic)
 			break;
+
+		ir_pop_2d();
+		IR_RenderPlayerView (&players[displayplayer]);
+		ir_push_2d();
+
 		if (automapactive)
 		{
 			AM_Drawer ();
 		}
-		//else
-		//{
-			ir_pop_2d();
-			IR_RenderPlayerView (&players[displayplayer]);
-			ir_push_2d();
-		//}
 		CT_Drawer();
 		UpdateState |= I_FULLVIEW;
 		SB_Drawer();
