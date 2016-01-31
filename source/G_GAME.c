@@ -145,6 +145,8 @@ boolean         mousearray[4];
 boolean         *mousebuttons = &mousearray[1];
 	// allow [-1]
 int             mousex, mousey;             // mouse values are used once
+int				cstickx, csticky;
+int				nubx, nuby;
 int             dclicktime, dclickstate, dclicks;
 int             dclicktime2, dclickstate2, dclicks2;
 
@@ -690,17 +692,27 @@ void G_BuildTiccmd (ticcmd_t *cmd)
 	{
 		cmd->angleturn -= mousex*0x8;
 	}
+
+	side += cstickx;
+	forward += csticky;
+
+	cmd->angleturn -= nubx*0x8;
+	if (nuby) {
+		look -= (nuby > 0 ? 1 : -1);
+	}
 	//forward += mousey;
 
 	//mousey /= 3;
-	if(mousey > 1) {
-		mousey = 1;
-	} else if(mousey < -1) {
-		mousey = -1;
+	if(mousey > 2) {
+		mousey = 2;
+	} else if(mousey < -2) {
+		mousey = -2;
 	}
 	look -= mousey;
 
 	mousex = mousey = 0;
+	cstickx = csticky = 0;
+	nubx = nuby = 0;
 
 	if (forward > MAXPLMOVE)
 		forward = MAXPLMOVE;
@@ -766,23 +778,21 @@ void G_DoLoadLevel (void)
 		memset (players[i].frags,0,sizeof(players[i].frags));
 	}
 
-	printf("P_SetupLevel\n");
 	P_SetupLevel(gameepisode, gamemap, 0, gameskill);
 	displayplayer = consoleplayer;      // view the guy you are playing
-	printf("I_GetTime\n");
 	starttime = I_GetTime ();
 	gameaction = ga_nothing;
-	printf("Z_CheckHeap\n");
 	Z_CheckHeap ();
 
 //
 // clear cmd building stuff
 //
 
-	printf("clear cmd buuilding stuff\n");
 	memset (gamekeydown, 0, sizeof(gamekeydown));
 	joyxmove = joyymove = 0;
 	mousex = mousey = 0;
+	cstickx = csticky = 0;
+	nubx = nuby = 0;
 	sendpause = sendsave = paused = false;
 	memset (mousebuttons, 0, sizeof(mousebuttons));
 	memset (joybuttons, 0, sizeof(joybuttons));
@@ -924,8 +934,8 @@ boolean G_Responder(event_t *ev)
 			mousebuttons[0] = ev->data1&1;
 			mousebuttons[1] = ev->data1&2;
 			mousebuttons[2] = ev->data1&4;
-			mousex = ev->data2*(mouseSensitivity+5)/10;
-			mousey = ev->data3*(mouseSensitivity+5)/10;
+			mousex = ev->data2;
+			mousey = ev->data3;
 			return(true); // eat events
 
 		case ev_joystick:
@@ -936,6 +946,16 @@ boolean G_Responder(event_t *ev)
 			joyxmove = ev->data2;
 			joyymove = ev->data3;
 			return(true); // eat events
+
+		case ev_cstick:
+			cstickx = ev->data2;
+			csticky = ev->data3;
+			return true;
+
+		case ev_nub:
+			nubx = ev->data2;
+			nuby = ev->data3;
+			return true;
 
 		default:
 			break;

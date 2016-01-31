@@ -42,6 +42,7 @@ typedef enum
 	MENU_LOAD,
 	MENU_SAVE,
 	MENU_CONFIG,
+	MENU_CALIBRATE,
 	MENU_NONE
 } MenuType_t;
 
@@ -74,6 +75,8 @@ static boolean SCQuitGame(int option);
 static boolean SCEpisode(int option);
 static boolean SCSkill(int option);
 static boolean SCMouseSensi(int option);
+static boolean SCCStickSensi(int option);
+static boolean SCNubSensi(int option);
 static boolean SCSfxVolume(int option);
 static boolean SCMusicVolume(int option);
 static boolean SCScreenSize(int option);
@@ -239,13 +242,43 @@ static Menu_t SkillMenu =
 	MENU_EPISODE
 };
 
+static MenuItem_t CalibrateItems[] =
+{
+	{ ITT_LRFUNC, "TOUCH", SCMouseSensi, 0, MENU_NONE },
+	{ ITT_EMPTY, NULL, NULL, 0, MENU_NONE },
+	{ ITT_LRFUNC, "CSTICK", SCCStickSensi, 0, MENU_NONE },
+	{ ITT_EMPTY, NULL, NULL, 0, MENU_NONE },
+	{ ITT_LRFUNC, "NUB", SCNubSensi, 0, MENU_NONE },
+	{ ITT_EMPTY, NULL, NULL, 0, MENU_NONE },
+};
+
+static void DrawCalibrateMenu(void);
+
+static Menu_t CalibrateMenu =
+{
+	88, 30,
+	DrawCalibrateMenu,
+	6, CalibrateItems,
+	0,
+	MENU_OPTIONS
+};
+
+static void DrawCalibrateMenu(void)
+{
+	DrawSlider(&CalibrateMenu, 1, 10, mouseSensitivity);
+	DrawSlider(&CalibrateMenu, 3, 10, cstickSensitivity);
+	DrawSlider(&CalibrateMenu, 5, 10, nubSensitivity);
+}
+
+
+
+
 static MenuItem_t OptionsItems[] =
 {
 	{ ITT_EFUNC, "END GAME", SCEndGame, 0, MENU_NONE },
 	{ ITT_EFUNC, "MESSAGES : ", SCMessages, 0, MENU_NONE },
-	{ ITT_LRFUNC, "MOUSE SENSITIVITY", SCMouseSensi, 0, MENU_NONE },
-	{ ITT_EMPTY, NULL, NULL, 0, MENU_NONE },
-	{ ITT_SETMENU, "CONFIG", NULL, 0, MENU_CONFIG },
+	{ ITT_SETMENU, "CALIBRATE", NULL, 0, MENU_CALIBRATE },
+	{ ITT_SETMENU, "CONTROLS", NULL, 0, MENU_CONFIG },
 	{ ITT_SETMENU, "MORE...", NULL, 0, MENU_OPTIONS2 }
 };
 
@@ -253,7 +286,7 @@ static Menu_t OptionsMenu =
 {
 	88, 30,
 	DrawOptionsMenu,
-	6, OptionsItems,
+	5, OptionsItems,
 	0,
 	MENU_MAIN
 };
@@ -404,6 +437,15 @@ static void DrawConfigMenu(void) {
 	MN_DrTextA("MORE...", x + 5, y + 5);
 }
 
+static void clear_keys(int key) {
+	int i;
+	for (i = 0; i < CONFIG_COUNT; i++) {
+		if (defaults[CONFIG_START + i].location && *defaults[CONFIG_START + i].location == key) {
+			*defaults[CONFIG_START + i].location = 0;
+		}
+	}
+}
+
 int CM_Responder(int key) {
 	if (key == KEY_ESCAPE || key == KEY_ENTER) {
 		ConfigMenuStealKeys = false;
@@ -411,6 +453,7 @@ int CM_Responder(int key) {
 	}
 
 	if (ConfigKey) {
+		clear_keys(key);
 		*ConfigKey = key;
 		ConfigKey = 0;
 		ConfigMenuStealKeys = false;
@@ -439,7 +482,8 @@ static Menu_t *Menus[] =
 	&FilesMenu,
 	&hLoadMenu,
 	&SaveMenu,
-	&OptionsConfig
+	&OptionsConfig,
+	&CalibrateMenu
 };
 
 //---------------------------------------------------------------------------
@@ -880,7 +924,6 @@ static void DrawOptionsMenu(void)
 	{
 		MN_DrTextB("OFF", 196, 50);
 	}
-	DrawSlider(&OptionsMenu, 3, 10, mouseSensitivity);
 }
 
 //---------------------------------------------------------------------------
@@ -1104,16 +1147,48 @@ static boolean SCSkill(int option)
 
 static boolean SCMouseSensi(int option)
 {
-	if(option == RIGHT_DIR)
+	if (option == RIGHT_DIR)
 	{
-		if(mouseSensitivity < 9)
+		if (mouseSensitivity < 9)
 		{
 			mouseSensitivity++;
 		}
 	}
-	else if(mouseSensitivity)
+	else if (mouseSensitivity)
 	{
 		mouseSensitivity--;
+	}
+	return true;
+}
+
+static boolean SCCStickSensi(int option)
+{
+	if (option == RIGHT_DIR)
+	{
+		if (cstickSensitivity < 9)
+		{
+			cstickSensitivity++;
+		}
+	}
+	else if (cstickSensitivity)
+	{
+		cstickSensitivity--;
+	}
+	return true;
+}
+
+static boolean SCNubSensi(int option)
+{
+	if (option == RIGHT_DIR)
+	{
+		if (nubSensitivity < 9)
+		{
+			nubSensitivity++;
+		}
+	}
+	else if (nubSensitivity)
+	{
+		nubSensitivity--;
 	}
 	return true;
 }

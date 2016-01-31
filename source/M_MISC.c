@@ -379,6 +379,8 @@ extern  int         joybspeed;
 extern  int     viewwidth, viewheight;
 
 int mouseSensitivity;
+int cstickSensitivity;
+int nubSensitivity;
 
 extern  int screenblocks;
 
@@ -560,7 +562,10 @@ default_t defaults[] =
 	{ "chatmacro6", (int *) &chat_macros[6], (int) HUSTR_CHATMACRO6 },
 	{ "chatmacro7", (int *) &chat_macros[7], (int) HUSTR_CHATMACRO7 },
 	{ "chatmacro8", (int *) &chat_macros[8], (int) HUSTR_CHATMACRO8 },
-	{ "chatmacro9", (int *) &chat_macros[9], (int) HUSTR_CHATMACRO9 }
+	{ "chatmacro9", (int *) &chat_macros[9], (int) HUSTR_CHATMACRO9 },
+
+	{ "cstick_sensitivity", &cstickSensitivity, 5 },
+	{ "nub_sensitivity", &nubSensitivity, 5 },
 };
 
 int numdefaults;

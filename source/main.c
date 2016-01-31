@@ -35,12 +35,20 @@ int heretic_prog;
 
 void __gspWaitForEvent(GSPGPU_Event id, bool nextEvent);
 
+void _3ds_shutdown() {
+	gpuExit();
+	gfxExit();
+}
+
+
 int main(int argc, char **argv)
 {
 	gfxInitDefault();
 	consoleInit(GFX_BOTTOM, 0);
 	gpuInit();
 	keyboard_init();
+
+	atexit(_3ds_shutdown);
 
 #if 0
 	ctr_rend_init();

@@ -16,7 +16,7 @@ touchPosition	g_lastTouch = { 0, 0 };
 touchPosition	g_currentTouch = { 0, 0 };
 
 //0=DS Bit,1=game key, 2=menu key
-int keys3ds[32][3] = {
+u32 keys3ds[32][3] = {
 	{ KEY_A,		KEY_RCTRL,		KEY_ENTER }, //bit 00
 	{ KEY_B,		' ',			KEY_ESCAPE }, //bit 01
 	{ KEY_SELECT,	KEY_ENTER,		0 }, //bit 02
@@ -41,6 +41,7 @@ int keys3ds[32][3] = {
 	{ 0, 0, 0 }, //bit 21
 	{ 0, 0, 0 }, //bit 22
 	{ 0, 0, 0 }, //bit 23
+#if 0
 	{ KEY_CSTICK_RIGHT,	KEYD_CSTICK_RIGHT,	0 }, //bit 24
 	{ KEY_CSTICK_LEFT,	KEYD_CSTICK_LEFT,	0 }, //bit 25
 	{ KEY_CSTICK_UP,	KEYD_CSTICK_UP,		0 }, //bit 26
@@ -49,12 +50,17 @@ int keys3ds[32][3] = {
 	{ KEY_CPAD_LEFT,	KEYD_CPAD_LEFT,		0 }, //bit 29
 	{ KEY_CPAD_UP,		KEYD_CPAD_UP,		0 }, //bit 30
 	{ KEY_CPAD_DOWN,	KEYD_CPAD_DOWN,		0 }, //bit 31
+#endif
 };
 
 extern boolean setup_select; // changing an item
 
 void _3ds_controls(void) {
 	touchPosition touch;
+	circlePosition nubPos = { 0, 0 };
+	circlePosition cstickPos = { 0, 0 };
+	int dx, dy;
+	event_t ev;
 
 	scanKeys();	// Do DS input housekeeping
 	u32 keys = keysDown();
@@ -67,7 +73,7 @@ void _3ds_controls(void) {
 		touchRead(&touch);
 	}
 
-	for (i = 0; i<32; i++) {
+	for (i = 0; i<24; i++) {
 		//send key down
 		if (keys3ds[i][0] & keys) {
 			event_t ev;
@@ -95,8 +101,6 @@ void _3ds_controls(void) {
 
 	if (keysHeld() & KEY_TOUCH) // this is only for x axis
 	{
-		int dx, dy;
-		event_t event;
 
 		touchRead(&g_currentTouch);// = touchReadXY();
 								   // let's use some fixed point magic to improve touch smoothing accuracy
@@ -106,16 +110,50 @@ void _3ds_controls(void) {
 		dx = (g_currentTouch.px - g_lastTouch.px) >> 6;
 		dy = (g_currentTouch.py - g_lastTouch.py) >> 6;
 
-		event.type = ev_mouse;
-		//event.data1 = I_SDLtoDoomMouseState(Event->motion.state);
-		event.data1 = 0;
-		event.data2 = dx << 5;// ((touch.px - 128) / 3) << 5;
-							  //event.data3 = (-(touch.py - 96) / 8) << 5;
-		event.data3 = dy << 4;// (0) << 5;
-		D_PostEvent(&event);
+		ev.type = ev_mouse;
+		ev.data1 = 0;
+		ev.data2 = (dx << 3) * (mouseSensitivity + 5) / 10;
+		ev.data3 = (dy >> 1) * (mouseSensitivity + 5) / 10;
+		D_PostEvent(&ev);
 
 		g_lastTouch.px = (g_lastTouch.px + g_currentTouch.px) / 2;
 		g_lastTouch.py = (g_lastTouch.py + g_currentTouch.py) / 2;
+	}
+
+	irrstCstickRead(&nubPos);
+	if (abs(nubPos.dx) > 20 || abs(nubPos.dy) > 20) {
+		dx = 0;
+		dy = 0;
+		if (abs(nubPos.dx) > 20) {
+			dx = (nubPos.dx) * (nubSensitivity + 5) / 10;
+		}
+		if (abs(nubPos.dy) > 20) {
+			dy = -(nubPos.dy) * (nubSensitivity + 5) / 10;
+		}
+
+		ev.type = ev_nub;
+		ev.data1 = 0;
+		ev.data2 = dx;
+		ev.data3 = dy;
+		D_PostEvent(&ev);
+	}
+
+	circleRead(&cstickPos);
+	if (abs(cstickPos.dx) > 20 || abs(cstickPos.dy) > 20) {
+		dx = 0;
+		dy = 0;
+		if (abs(cstickPos.dx) > 20) {
+			dx = (cstickPos.dx >> 2) * (cstickSensitivity + 5) / 10;
+		}
+		if (abs(cstickPos.dy) > 20) {
+			dy = (cstickPos.dy >> 2) * (cstickSensitivity + 5) / 10;
+		}
+
+		ev.type = ev_cstick;
+		ev.data1 = 0;
+		ev.data2 = dx;
+		ev.data3 = dy;
+		D_PostEvent(&ev);
 	}
 
 	keyboard_input();

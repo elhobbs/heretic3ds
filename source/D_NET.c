@@ -388,7 +388,7 @@ void NetUpdate (void)
 		D_ProcessEvents ();
 		if (maketic - gameticdiv >= BACKUPTICS/2-1)
 			break;          // can't hold any more
-//printf ("mk:%i ",maketic);
+		//printf ("mk:%i ",maketic);
 		G_BuildTiccmd (&localcmds[maketic%BACKUPTICS]);
 		maketic++;
 	}

@@ -166,7 +166,9 @@ typedef enum
 	ev_keydown,
 	ev_keyup,
 	ev_mouse,
-	ev_joystick
+	ev_joystick,
+	ev_nub,
+	ev_cstick
 } evtype_t;
 
 typedef struct
@@ -742,6 +744,8 @@ extern int scaledviewwidth;
 extern int viewheight;
 
 extern int mouseSensitivity;
+extern int cstickSensitivity;
+extern int nubSensitivity;
 
 extern boolean precache; // if true, load all graphics at level load
 
